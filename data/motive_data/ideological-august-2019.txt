@@ -1,0 +1,2 @@
+D:\APC CSVs\twitter\china_082019_1_tweets_csv_hashed.csv
+D:\APC CSVs\twitter\china_082019_2_tweets_csv_hashed.csv

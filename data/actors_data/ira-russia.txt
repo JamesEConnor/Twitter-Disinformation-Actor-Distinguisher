@@ -1,0 +1,5 @@
+E:\APC CSVs\twitter-2\032020_tweets_csv_hashed.csv
+E:\APC CSVs\twitter-2\ira_tweets_csv_hashed.csv
+E:\APC CSVs\twitter-2\russian-tweets-200000-nbcnews.csv
+E:\APC CSVs\twitter\russia_201906_1_tweets_csv_hashed.csv
+E:\APC CSVs\twitter\russian_linked_tweets_csv_hashed.csv

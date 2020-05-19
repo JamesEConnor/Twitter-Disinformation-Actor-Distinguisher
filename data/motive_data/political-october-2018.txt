@@ -1,0 +1,2 @@
+E:\APC CSVs\twitter-2\ira_tweets_csv_hashed.csv
+E:\APC CSVs\twitter\iranian_tweets_csv_hashed.csv

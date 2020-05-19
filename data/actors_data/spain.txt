@@ -1,0 +1,2 @@
+E:\APC CSVs\twitter-2\catalonia_201906_1_tweets_csv_hashed.csv
+E:\APC CSVs\twitter\spain_082019_tweets_csv_hashed.csv
