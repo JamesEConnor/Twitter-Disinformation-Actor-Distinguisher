@@ -1,4 +1,4 @@
 
 topics/GoogleNews-vectors-negative300.bin
 motives/cp.pickle
-data/secret.json
+data/creds.json
