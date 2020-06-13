@@ -36,22 +36,31 @@ def train_model():
     # Get measures of all tweets from dataframe.    
     # Read the CSV file mapping all tweet data to a motive.
     labeledDataPath = "data/actors_and_motives.csv";
-    df = pd.read_csv(labeledDataPath, usecols=["tweet_docs", "actor"], converters={"tweet_docs": lambda x: x.strip("[]").split(", ")});
+    df = pd.read_csv(labeledDataPath, usecols=["tweet_docs", "apm"], converters={"tweet_docs": lambda x: x.strip("[]").split(", ")});
     
     # Removes leading and ending quote characters
     df["tweet_docs"] = [[x.strip('\"') for x in df["tweet_docs"][i]] for i in range(len(df["tweet_docs"]))];
     
     # Create the training and testing datasets
     TRAIN_SPLIT = 250;
-    MAX_LINES = 50;
+    MAX_LINES = 300;
+    RANDOM_SELECTION = 200;
     dataset = [];
     
     # Get all file paths and their associated motives from the dataframe.
     print("GATHERING DATASET...")
+    counter = 0;
     for i in range(len(df["tweet_docs"])):
-        for j in range(len(df["tweet_docs"][i])):
+        for j in range(len(df["tweet_docs"][i])):        
             read_dataframe = pd.read_csv(df["tweet_docs"][i][j], nrows=MAX_LINES);
-            dataset += [(measure, df["actor"][i]) for measure in combine_measures(read_dataframe)];
+            
+            if RANDOM_SELECTION < len(read_dataframe):
+                read_dataframe = read_dataframe.sample(n=RANDOM_SELECTION);
+            
+            dataset += [(measure, df["apm"][i]) for measure in combine_measures(read_dataframe)];
+            
+            counter += 1;
+            print("Loading Dataset " + str(counter));
     
     print("SHUFFLING DATASET...")
     random.shuffle(dataset);
@@ -82,8 +91,11 @@ def train_model():
     print("BEST K-VALUE: " + str(chosen_k));
     
     # Save the classifier.
-    save_file = open('actors_model_k' + str(chosen_k) + '.pickle', 'wb');
+    save_file = open('models/sampled_' + str(RANDOM_SELECTION) + '_actors_model_k' + str(chosen_k) + '.pickle', 'wb');
     pickle.dump(best_model, save_file);
     save_file.close();
     
     print("MODEL SAVED");
+    
+    
+# train_model();
