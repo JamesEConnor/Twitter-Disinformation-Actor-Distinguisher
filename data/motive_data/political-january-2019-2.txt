@@ -1,4 +1,0 @@
-D:\APC CSVs\twitter\iran_201901_1_tweets_csv_hashed_1.csv
-D:\APC CSVs\twitter\iran_201901_1_tweets_csv_hashed_2.csv
-D:\APC CSVs\twitter\iran_201901_1_tweets_csv_hashed_3.csv
-D:\APC CSVs\twitter\iran_201901_1_tweets_csv_hashed_4.csv

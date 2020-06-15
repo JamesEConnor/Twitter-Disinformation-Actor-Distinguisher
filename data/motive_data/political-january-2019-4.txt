@@ -1,4 +1,0 @@
-E:\APC CSVs\twitter\venezuela_201901_1_tweets_csv_hashed_1.csv
-E:\APC CSVs\twitter\venezuela_201901_1_tweets_csv_hashed_2.csv
-E:\APC CSVs\twitter\venezuela_201901_1_tweets_csv_hashed_3.csv
-E:\APC CSVs\twitter\venezuela_201906_1_tweets_csv_hashed.csv

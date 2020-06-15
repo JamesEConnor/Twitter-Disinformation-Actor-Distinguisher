@@ -11,9 +11,29 @@ import json;
 import pickle;
 from argparse import ArgumentParser;
 import pandas as pd;
-from train_actor_clustering import combine_measures;
-
+import numpy as np;
 import data.cache;
+
+from motives.run_motive_classifier import classifyDF;
+from topics.run_topic_quantifier import cluster_topics;
+from methods.run_method_encoder import tweet_info;
+
+
+
+# Combine all three measurements for KNeighborsClassifier
+def combine_measures(dataframe):    
+    motive_classes = classifyDF(dataframe, "motives/models/model.pickle");
+    topics_quantified = cluster_topics(dataframe["tweet_text"].tolist(), "topics/models/model_001.pickle");
+    methods_encoded = tweet_info(dataframe);
+        
+    result = [];
+    for index in range(len(motive_classes)):
+        append = motive_classes[index];
+        append.extend([topics_quantified[index]]);
+        append.extend(methods_encoded[index]);
+        result.append(append);
+        
+    return np.asarray(result);
 
 # Track the run time
 start_time = time.time();
@@ -22,7 +42,7 @@ start_time = time.time();
 parser = ArgumentParser()
 parser.add_argument('-u', '--handle',
                     help='Twitter handle to attribute to an information operation.',
-                    default="thezenhaitian");
+                    default="realDonaldTrump");
 args = parser.parse_args();
 
 if not args.handle:
@@ -30,7 +50,7 @@ if not args.handle:
     
 # Check the cache for the handle.
 cache_check = data.cache.check_cache(args.handle);
-if cache_check.empty:
+if cache_check.empty or cache_check.isnull().values.any():
     # Get the API credentials
     creds = {};
     with open('data/creds.json') as file:

@@ -1,2 +1,0 @@
-E:\APC CSVs\twitter-2\egypt_uae_082019_tweets_csv_hashed.csv
-E:\APC CSVs\twitter\uae_082019_tweets_csv_hashed.csv
