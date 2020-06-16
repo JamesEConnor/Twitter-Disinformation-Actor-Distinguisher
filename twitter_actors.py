@@ -19,7 +19,6 @@ from topics.run_topic_quantifier import cluster_topics;
 from methods.run_method_encoder import tweet_info;
 
 
-
 # Combine all three measurements for KNeighborsClassifier
 def combine_measures(dataframe):    
     motive_classes = classifyDF(dataframe, "motives/models/model.pickle");
