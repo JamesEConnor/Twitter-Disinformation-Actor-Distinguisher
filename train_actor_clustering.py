@@ -44,8 +44,9 @@ def train_model():
     # Create the training and testing datasets
     TRAIN_SPLIT = 250;
     MAX_LINES = 300;
-    RANDOM_SELECTION = 200;
+    RANDOM_SELECTION = 250;
     dataset = [];
+    raw_dataset = [];
     
     # Get all file paths and their associated motives from the dataframe.
     print("GATHERING DATASET...")
@@ -57,16 +58,20 @@ def train_model():
             if RANDOM_SELECTION < len(read_dataframe):
                 read_dataframe = read_dataframe.sample(n=RANDOM_SELECTION);
             
+            raw_dataset += [np.append(row, df["apm"][i]) for row in read_dataframe.to_numpy()];
             dataset += [(measure, df["apm"][i]) for measure in combine_measures(read_dataframe)];
             
             counter += 1;
             print("Loading Dataset " + str(counter));
     
     print("SHUFFLING DATASET...")
-    random.shuffle(dataset);
+    shuffle = list(zip(dataset, raw_dataset));
+    random.shuffle(shuffle);
+    dataset, raw_dataset = [e[0] for e in shuffle], [e[1] for e in shuffle];
+    
     x_training, y_training = np.asarray([point[0] for point in dataset[TRAIN_SPLIT:]]), np.asarray([point[1] for point in dataset[TRAIN_SPLIT:]]);
     x_testing, y_testing = np.asarray([point[0] for point in dataset[:TRAIN_SPLIT]]), np.asarray([point[1] for point in dataset[:TRAIN_SPLIT]]);
-    
+        
     # Create, train, and test for the best classifier.
     k_range = range(1, 25);
     best_model = None;
@@ -95,6 +100,10 @@ def train_model():
     pickle.dump(best_model, save_file);
     save_file.close();
     
+    cols = ["tweetid","userid","user_display_name","user_screen_name","user_reported_location","user_profile_description","user_profile_url","follower_count","following_count","account_creation_date","account_language","tweet_language","tweet_text","tweet_time","tweet_client_name","in_reply_to_userid","in_reply_to_tweetid","quoted_tweet_tweetid","is_retweet","retweet_userid","retweet_tweetid","latitude","longitude","quote_count","reply_count","like_count","retweet_count","hashtags","urls","user_mentions","poll_choices", "apm"];
+    pd.DataFrame(raw_dataset[TRAIN_SPLIT:], columns=cols).to_csv('models/sampled_' + str(RANDOM_SELECTION) + '_actors_model_k' + str(chosen_k) + '_TRAIN.csv');
+    pd.DataFrame(raw_dataset[:TRAIN_SPLIT], columns=cols).to_csv('models/sampled_' + str(RANDOM_SELECTION) + '_actors_model_k' + str(chosen_k) + '_TEST.csv');
+        
     print("MODEL SAVED");
     
     
