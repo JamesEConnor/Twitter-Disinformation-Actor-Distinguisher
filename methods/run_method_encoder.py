@@ -30,13 +30,17 @@ def tweet_info(df):
     # Summarize tweet info
     result = [];
     for index, tweet in df.iterrows():
-        append = [];
-        append += [strDateToUTC(tweet["account_creation_date"])];       # The account creation date in UTC days
-        append += [averageLanguageCode(tweet["account_language"])];             # The account language, tokenized
-        append += [averageLanguageCode(tweet["tweet_language"])];               # The tweet language, tokenized
-        append += [encodeTime(tweet["tweet_time"])];                           # The tweet time, formatted nicely
-        append += [1 if tweet["is_retweet"] == True else 0];            # Whether it's a retweet (1 for True, 0 for False)
-        result.append(append);
+        try:
+            append = [];
+            append += [strDateToUTC(tweet["account_creation_date"])];       # The account creation date in UTC days
+            append += [averageLanguageCode(tweet["account_language"])];             # The account language, tokenized
+            append += [averageLanguageCode(tweet["tweet_language"])];               # The tweet language, tokenized
+            append += [encodeTime(tweet["tweet_time"])];                           # The tweet time, formatted nicely
+            append += [1 if tweet["is_retweet"] == True else 0];            # Whether it's a retweet (1 for True, 0 for False)
+            result.append(append);
+        except:
+            print(tweet["tweetid"]);
+            pass;
     
     return result;
         

@@ -53,7 +53,7 @@ def train_model():
     counter = 0;
     for i in range(len(df["tweet_docs"])):
         for j in range(len(df["tweet_docs"][i])):        
-            read_dataframe = pd.read_csv(df["tweet_docs"][i][j], nrows=MAX_LINES);
+            read_dataframe = pd.read_csv(df["tweet_docs"][i][j]);#, nrows=MAX_LINES);
             
             if RANDOM_SELECTION < len(read_dataframe):
                 read_dataframe = read_dataframe.sample(n=RANDOM_SELECTION);
